@@ -17,6 +17,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddTransient<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddTransient<IAssessmentSeasonRepository, AssessmentSeasonRepository>();
+builder.Services.AddScoped<IAssessmentSeasonService, AssessmentSeasonService>();
 
 var app = builder.Build();
 

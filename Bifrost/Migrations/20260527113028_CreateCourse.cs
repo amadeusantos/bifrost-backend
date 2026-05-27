@@ -15,19 +15,19 @@ namespace Bifrost.Migrations
                 name: "courses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
-                    Code = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    code = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_courses", x => x.Id);
+                    table.PrimaryKey("PK_courses", x => x.id);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_courses_Code",
+                name: "IX_courses_code",
                 table: "courses",
-                column: "Code",
+                column: "code",
                 unique: true);
         }
 
