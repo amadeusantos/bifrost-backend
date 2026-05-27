@@ -18,17 +18,17 @@ public abstract class RepositoryBase<TE, TD>(ApplicationDbContext applicationDbC
     {
         var entity = DomainToEntity(domain);
         entity.Id = Guid.NewGuid();
-        entity = (await dbSet.AddAsync(entity)).Entity;
+        await dbSet.AddAsync(entity);
         await applicationDbContext.SaveChangesAsync();
-        return EntityToDomain(entity);
+        return (await FindById(entity.Id))!;
     }
 
     public async Task<TD> Update(TD domain)
     {
         var entity = DomainToEntity(domain);
-        entity = dbSet.Update(entity).Entity;
+        dbSet.Update(entity);
         await applicationDbContext.SaveChangesAsync();
-        return EntityToDomain(entity);
+        return (await FindById(entity.Id))!;
     }
 
     public async Task<TD?> FindById(Guid id)
