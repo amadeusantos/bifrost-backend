@@ -9,8 +9,10 @@ namespace Bifrost.Infrastructure.Persistence.Entity;
 public class CourseEntity: EntityBase
 {
     [MaxLength(64)]
+    [Column("name")]
     public required string Name { get; set; } = null!;
     
     [MaxLength(32)]
+    [Column("code")]
     public required string Code { get; set; } = null!;
 }
