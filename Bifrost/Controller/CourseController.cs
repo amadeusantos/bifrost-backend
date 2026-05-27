@@ -10,7 +10,7 @@ namespace Bifrost;
 [Route("courses")]
 public class CourseController(ICourseService courseService) : ControllerBase
 {
-    [HttpGet("/all")]
+    [HttpGet("all")]
     public async Task<ActionResult<List<CourseResponse>>> GetAll(
         )
     {
