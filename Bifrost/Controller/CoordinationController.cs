@@ -1,7 +1,6 @@
 using Bifrost.Core.Adapter;
 using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.Coordination;
-using Bifrost.Core.Domain.CoordinationMember;
 using Bifrost.Request;
 using Bifrost.Response;
 using Microsoft.AspNetCore.Mvc;

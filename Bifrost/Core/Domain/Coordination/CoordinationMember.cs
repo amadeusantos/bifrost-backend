@@ -1,4 +1,4 @@
-namespace Bifrost.Core.Domain.CoordinationMember;
+namespace Bifrost.Core.Domain.Coordination;
 
 public class CoordinationMember
 {

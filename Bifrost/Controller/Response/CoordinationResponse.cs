@@ -1,5 +1,4 @@
 using Bifrost.Core.Domain.Coordination;
-using Bifrost.Core.Domain.CoordinationMember;
 
 namespace Bifrost.Response;
 

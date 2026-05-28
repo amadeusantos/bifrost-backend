@@ -1,6 +1,5 @@
 using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.Coordination;
-using Bifrost.Core.Domain.CoordinationMember;
 using Bifrost.Core.Domain.User;
 
 namespace Bifrost.Core.Port.Repository;

@@ -7,5 +7,5 @@ public class Coordination
     public decimal? AvgScore { get; set; }
     public required Guid AssessmentSeasonId { get; set; }
     public AssessmentSeason.AssessmentSeasonMinimal assessmentSeason { get; set; } = null!;
-    public required List<CoordinationMember.CoordinationMember> CoordinationMembers { get; set; }
+    public required List<CoordinationMember> CoordinationMembers { get; set; }
 }

@@ -2,7 +2,6 @@ using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.AssessmentSeason;
 using Bifrost.Core.Domain.Enum;
 using Bifrost.Core.Domain.Coordination;
-using Bifrost.Core.Domain.CoordinationMember;
 using Bifrost.Core.Domain.User;
 using Bifrost.Core.Exception.AssessmentSeason;
 using Bifrost.Core.Exception.Coordination;
