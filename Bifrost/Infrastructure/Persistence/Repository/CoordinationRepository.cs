@@ -9,12 +9,16 @@ namespace Bifrost.Infrastructure.Persistence.Repository;
 public class CoordinationRepository(ApplicationDbContext applicationDbContext):RepositoryBase<CoordinationEntity, Coordination>(applicationDbContext), ICoordinationRepository
 {
     private DbSet<CoordinationMemberEntity> CoordinationMembers { get; set; } = applicationDbContext.Set<CoordinationMemberEntity>();
-    public async Task<Pagination<Coordination>> GetCoordinations(int page, int size)
+    public async Task<Pagination<Coordination>> GetCoordinations(int page, int size, Guid? assessmentSeasonId)
     {
         int skip = (page - 1) * size;
-        int total = await dbSet.CountAsync();
-        CoordinationEntity[] result = await dbSet.Skip(skip).Take(size)
-            .OrderByDescending(coordination =>  coordination.AssessmentSeason.Period)
+        var query = assessmentSeasonId.HasValue
+            ? dbSet.Where(c => c.AssessmentSeasonId == assessmentSeasonId.Value)
+            : dbSet;
+        int total = await query.CountAsync();
+        CoordinationEntity[] result = await query
+            .OrderByDescending(c => c.AssessmentSeason.Period)
+            .Skip(skip).Take(size)
             .ToArrayAsync();
         return new Pagination<Coordination>(page, size, total, result.Select(EntityToDomain).ToArray());
     }

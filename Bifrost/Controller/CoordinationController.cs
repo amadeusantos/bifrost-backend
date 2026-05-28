@@ -13,11 +13,12 @@ public class CoordinationController(ICoordinationService coordinationService): C
 {
     [HttpGet]
     public async Task<ActionResult<PaginationResponse<Coordination, CoordinationResponse>>> Paginate(
-        PaginationQueryRequest paginationQueryRequest)
+        [FromQuery] PaginationQueryRequest paginationQueryRequest,
+        [FromQuery] Guid? assessmentSeasonId)
     {
-        Pagination<Coordination> pagination = 
-            await coordinationService.GetCoordinations(paginationQueryRequest.Page, paginationQueryRequest.Size);
-        
+        Pagination<Coordination> pagination =
+            await coordinationService.GetCoordinations(paginationQueryRequest.Page, paginationQueryRequest.Size, assessmentSeasonId);
+
         return new PaginationResponse<Coordination, CoordinationResponse>(
             pagination, coordination => new CoordinationResponse(coordination));
     }

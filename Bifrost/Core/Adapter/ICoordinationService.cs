@@ -9,7 +9,7 @@ public interface ICoordinationService
     
     public Task<Coordination> GetCoordination(Guid id);
     
-    public Task<Pagination<Coordination>> GetCoordinations(int page, int size);
+    public Task<Pagination<Coordination>> GetCoordinations(int page, int size, Guid? assessmentSeasonId);
     
     public Task<Coordination> UpdateCoordination(Guid id, CoordinationUpdateDto coordinationUpdateDto);
     

@@ -51,9 +51,9 @@ public class CoordinationService(
         return coordination ?? throw new CoordinationNotFoundException();
     }
 
-    public async Task<Pagination<Coordination>> GetCoordinations(int page, int size)
+    public async Task<Pagination<Coordination>> GetCoordinations(int page, int size, Guid? assessmentSeasonId)
     {
-        return await coordinationRepository.GetCoordinations(page, size);
+        return await coordinationRepository.GetCoordinations(page, size, assessmentSeasonId);
     }
 
     public async Task<Coordination> UpdateCoordination(Guid id, CoordinationUpdateDto coordinationUpdateDto)
