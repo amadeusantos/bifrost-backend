@@ -10,25 +10,27 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<CoordinationEntity> Coordinations { get; set; }
     public DbSet<CoordinationMemberEntity> CoordinationMembers { get; set; }
-    
+    public DbSet<AcademicCenterEntity> AcademicCenters { get; set; }
+    public DbSet<AcademicCenterMemberEntity> AcademicCenterMembers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AssessmentSeasonEntity>()
             .Navigation(p => p.Course)
             .AutoInclude();
-        
+
         modelBuilder.Entity<UserEntity>()
             .Navigation(p => p.Course)
             .AutoInclude();
-        
+
         modelBuilder.Entity<UserEntity>()
             .Property(e => e.Profile)
             .HasConversion<string>();
-        
+
         modelBuilder.Entity<UserEntity>()
             .Navigation(p => p.Course)
             .AutoInclude();
-        
+
         modelBuilder.Entity<CoordinationMemberEntity>()
             .Navigation(p => p.User)
             .AutoInclude();
@@ -39,6 +41,18 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         modelBuilder.Entity<CoordinationEntity>()
             .Navigation(p => p.CoordinationMembers)
+            .AutoInclude();
+
+        modelBuilder.Entity<AcademicCenterMemberEntity>()
+            .Navigation(p => p.User)
+            .AutoInclude();
+
+        modelBuilder.Entity<AcademicCenterEntity>()
+            .Navigation(p => p.AssessmentSeason)
+            .AutoInclude();
+
+        modelBuilder.Entity<AcademicCenterEntity>()
+            .Navigation(p => p.AcademicCenterMembers)
             .AutoInclude();
     }
 }
