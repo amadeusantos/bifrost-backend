@@ -12,6 +12,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<CoordinationMemberEntity> CoordinationMembers { get; set; }
     public DbSet<AcademicCenterEntity> AcademicCenters { get; set; }
     public DbSet<AcademicCenterMemberEntity> AcademicCenterMembers { get; set; }
+    public DbSet<DisciplineEntity> Disciplines { get; set; }
+    public DbSet<DisciplineStudentEntity> DisciplineStudents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -53,6 +55,22 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         modelBuilder.Entity<AcademicCenterEntity>()
             .Navigation(p => p.AcademicCenterMembers)
+            .AutoInclude();
+
+        modelBuilder.Entity<DisciplineStudentEntity>()
+            .Navigation(p => p.User)
+            .AutoInclude();
+
+        modelBuilder.Entity<DisciplineEntity>()
+            .Navigation(p => p.AssessmentSeason)
+            .AutoInclude();
+
+        modelBuilder.Entity<DisciplineEntity>()
+            .Navigation(p => p.Professor)
+            .AutoInclude();
+
+        modelBuilder.Entity<DisciplineEntity>()
+            .Navigation(p => p.DisciplineStudents)
             .AutoInclude();
     }
 }
