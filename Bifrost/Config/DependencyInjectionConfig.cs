@@ -31,5 +31,6 @@ public static class DependencyInjectionConfig
         services.AddScoped<IAcademicCenterService, AcademicCenterService>();
 
         services.AddTransient<IDisciplineRepository, DisciplineRepository>();
+        services.AddScoped<IDisciplineService, DisciplineService>();
     }
 }
