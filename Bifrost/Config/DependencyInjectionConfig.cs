@@ -29,5 +29,7 @@ public static class DependencyInjectionConfig
 
         services.AddTransient<IAcademicCenterRepository, AcademicCenterRepository>();
         services.AddScoped<IAcademicCenterService, AcademicCenterService>();
+
+        services.AddTransient<IDisciplineRepository, DisciplineRepository>();
     }
 }
