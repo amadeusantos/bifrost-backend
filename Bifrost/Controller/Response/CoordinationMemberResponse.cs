@@ -1,4 +1,3 @@
-using Bifrost.Controller.Response;
 using Bifrost.Core.Domain.Coordination;
 
 namespace Bifrost.Response;
