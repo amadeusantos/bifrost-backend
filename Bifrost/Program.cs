@@ -23,6 +23,8 @@ builder.Services.AddTransient<IAssessmentSeasonRepository, AssessmentSeasonRepos
 builder.Services.AddScoped<IAssessmentSeasonService, AssessmentSeasonService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddTransient<ICoordinationRepository, CoordinationRepository>();
+builder.Services.AddScoped<ICoordinationService, CoordinationService>();
 
 var app = builder.Build();
 

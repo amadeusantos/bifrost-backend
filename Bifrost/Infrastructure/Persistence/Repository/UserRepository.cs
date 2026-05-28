@@ -34,6 +34,13 @@ public class UserRepository(ApplicationDbContext applicationDbContext) :Reposito
         return new Pagination<User>(page, size, total, result.Select(EntityToDomain).ToArray());
     }
 
+    public async Task<List<User>> FindManyUsers(List<Guid> userIds, UserProfileEnum profile, Guid courseId)
+    { var users=  await dbSet
+            .Where(u => userIds.Contains(u.Id) && u.Profile == profile && u.CourseId == courseId)
+            .ToListAsync();
+    return users.Select(EntityToDomain).ToList();
+    }
+
     protected override User EntityToDomain(UserEntity entity)
     {
         return new User

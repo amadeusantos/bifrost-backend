@@ -8,6 +8,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<CourseEntity> Courses { get; set; }
     public DbSet<AssessmentSeasonEntity> AssessmentSeasons { get; set; }
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<CoordinationEntity> Coordinations { get; set; }
+    public DbSet<CoordinationMemberEntity> CoordinationMembers { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -22,5 +24,21 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<UserEntity>()
             .Property(e => e.Profile)
             .HasConversion<string>();
+        
+        modelBuilder.Entity<UserEntity>()
+            .Navigation(p => p.Course)
+            .AutoInclude();
+        
+        modelBuilder.Entity<CoordinationMemberEntity>()
+            .Navigation(p => p.User)
+            .AutoInclude();
+
+        modelBuilder.Entity<CoordinationEntity>()
+            .Navigation(p => p.AssessmentSeason)
+            .AutoInclude();
+
+        modelBuilder.Entity<CoordinationEntity>()
+            .Navigation(p => p.CoordinationMembers)
+            .AutoInclude();
     }
 }
