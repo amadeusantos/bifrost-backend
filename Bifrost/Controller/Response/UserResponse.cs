@@ -1,8 +1,7 @@
 using Bifrost.Core.Domain.Enum;
 using Bifrost.Core.Domain.User;
-using Bifrost.Response;
 
-namespace Bifrost.Controller.Response;
+namespace Bifrost.Response;
 
 public class UserResponse(User user)
 {

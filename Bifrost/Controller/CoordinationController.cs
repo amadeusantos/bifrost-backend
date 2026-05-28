@@ -1,4 +1,3 @@
-using Bifrost.Controller;
 using Bifrost.Core.Adapter;
 using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.Coordination;

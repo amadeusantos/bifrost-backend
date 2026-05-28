@@ -1,10 +1,9 @@
-using Bifrost.Controller;
-using Bifrost.Controller.Response;
 using Bifrost.Core.Adapter;
 using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.Enum;
 using Bifrost.Core.Domain.User;
 using Bifrost.Request;
+using Bifrost.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bifrost;

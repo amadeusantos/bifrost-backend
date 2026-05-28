@@ -1,6 +1,6 @@
 using Bifrost.Core.Domain;
 
-namespace Bifrost.Controller;
+namespace Bifrost.Response;
 
 public class PaginationResponse<T, TR>(Pagination<T> pagination, Func<T, TR> mapper)
 {
