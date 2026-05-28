@@ -156,14 +156,27 @@ public class CoordinationServiceTests
     // --- Paginate ---
 
     [Fact]
-    public async Task GetCoordinations_ReturnsPaginatedResult()
+    public async Task GetCoordinations_WithoutFilter_ReturnsPaginatedResult()
     {
         var pagination = new Pagination<Coordination>(1, 10, 0, []);
-        _coordinationRepository.GetCoordinations(1, 10).Returns(pagination);
+        _coordinationRepository.GetCoordinations(1, 10, null).Returns(pagination);
 
-        var result = await _sut.GetCoordinations(1, 10);
+        var result = await _sut.GetCoordinations(1, 10, null);
 
         result.Should().BeEquivalentTo(pagination);
+    }
+
+    [Fact]
+    public async Task GetCoordinations_WithAssessmentSeasonIdFilter_PassesFilterToRepository()
+    {
+        var seasonId = Guid.NewGuid();
+        var pagination = new Pagination<Coordination>(1, 10, 0, []);
+        _coordinationRepository.GetCoordinations(1, 10, seasonId).Returns(pagination);
+
+        var result = await _sut.GetCoordinations(1, 10, seasonId);
+
+        result.Should().BeEquivalentTo(pagination);
+        await _coordinationRepository.Received(1).GetCoordinations(1, 10, seasonId);
     }
 
     // --- Update ---

@@ -26,5 +26,8 @@ public static class DependencyInjectionConfig
 
         services.AddTransient<ICoordinationRepository, CoordinationRepository>();
         services.AddScoped<ICoordinationService, CoordinationService>();
+
+        services.AddTransient<IAcademicCenterRepository, AcademicCenterRepository>();
+        services.AddScoped<IAcademicCenterService, AcademicCenterService>();
     }
 }
