@@ -7,16 +7,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bifrost.Infrastructure.Persistence.Repository;
 
-public class AssessmentSeasonRepository(ApplicationDbContext applicationDbContext) : RepositoryBase<AssessmentSeasonEntity, AssessmentSeason>(applicationDbContext), IAssessmentSeasonRepository
+public class AssessmentSeasonRepository(ApplicationDbContext applicationDbContext)
+    : RepositoryBase<AssessmentSeasonEntity, AssessmentSeason>(applicationDbContext), IAssessmentSeasonRepository
 {
     protected override AssessmentSeason EntityToDomain(AssessmentSeasonEntity entity)
     {
         return new AssessmentSeason
         {
             Id = entity.Id, 
-            Period = entity.Period, 
-            StartDateTime = entity.StartDateTime, 
-            CourseId = entity.CourseId, Course = new ()
+            Period = entity.Period,
+            StartDateTime = entity.StartDateTime,
+            EndDateTime =  entity.EndDateTime,
+            CourseId = entity.CourseId,
+            Course = new ()
             {
                 Id = entity.Course.Id,  Name = entity.Course.Name, Code =  entity.Course.Code
             }
