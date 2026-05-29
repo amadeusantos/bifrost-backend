@@ -36,5 +36,7 @@ public static class DependencyInjectionConfig
         services.AddScoped<IDisciplineService, DisciplineService>();
 
         services.AddHttpClient<IOAuthGateway, OAuthGateway>();
+
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
     }
 }

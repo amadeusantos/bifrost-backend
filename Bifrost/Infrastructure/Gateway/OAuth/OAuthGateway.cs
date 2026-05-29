@@ -51,7 +51,7 @@ public class OAuthGateway(HttpClient httpClient, IConfiguration configuration) :
 
     public async Task<OAuthUserInfo> GetUserInfo(string accessToken)
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, $"{GoogleApi}/userinfo");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"{GoogleApi}/userinfo?alt=json");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
         var response = await httpClient.SendAsync(request);

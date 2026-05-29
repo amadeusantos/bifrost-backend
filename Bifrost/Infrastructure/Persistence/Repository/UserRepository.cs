@@ -14,7 +14,7 @@ public class UserRepository(ApplicationDbContext applicationDbContext) :Reposito
 
     public async Task<User?> FindByEmail(string email)
     {
-        UserEntity? userEntity = await dbSet.FirstOrDefaultAsync(u => u.Email == email);
+        UserEntity? userEntity = await dbSet.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
         return userEntity is not null ? EntityToDomain(userEntity) : null;
     }
 
