@@ -1,6 +1,8 @@
 using Bifrost.Core.Adapter;
+using Bifrost.Core.Port.Gateway;
 using Bifrost.Core.Port.Repository;
 using Bifrost.Core.Service;
+using Bifrost.Infrastructure.Gateway.OAuth;
 using Bifrost.Infrastructure.Persistence;
 using Bifrost.Infrastructure.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -32,5 +34,7 @@ public static class DependencyInjectionConfig
 
         services.AddTransient<IDisciplineRepository, DisciplineRepository>();
         services.AddScoped<IDisciplineService, DisciplineService>();
+
+        services.AddHttpClient<IOAuthGateway, OAuthGateway>();
     }
 }
