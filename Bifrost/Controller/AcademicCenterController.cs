@@ -3,10 +3,12 @@ using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.AcademicCenter;
 using Bifrost.Request;
 using Bifrost.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bifrost;
 
+[Authorize]
 [ApiController]
 [Route("academic-centers")]
 public class AcademicCenterController(IAcademicCenterService academicCenterService) : ControllerBase
@@ -31,6 +33,7 @@ public class AcademicCenterController(IAcademicCenterService academicCenterServi
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<AcademicCenterResponse>> Create(
         [FromBody] AcademicCenterCreateBodyRequest request)
     {
@@ -43,6 +46,7 @@ public class AcademicCenterController(IAcademicCenterService academicCenterServi
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<AcademicCenterResponse>> Update(
         Guid id, [FromBody] AcademicCenterUpdateBodyRequest request)
     {
@@ -54,6 +58,7 @@ public class AcademicCenterController(IAcademicCenterService academicCenterServi
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<NoContentResult> Delete(Guid id)
     {
         await academicCenterService.DeleteAcademicCenter(id);

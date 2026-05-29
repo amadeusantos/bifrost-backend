@@ -4,10 +4,12 @@ using Bifrost.Core.Domain.Enum;
 using Bifrost.Core.Domain.User;
 using Bifrost.Request;
 using Bifrost.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bifrost;
 
+[Authorize]
 [ApiController]
 [Route("users")]
 public class UserController(IUserService userService) : ControllerBase
@@ -34,6 +36,7 @@ public class UserController(IUserService userService) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<CreatedResult> Create([FromBody] UserCreateBodyRequest request)
     {
         User user = await userService.CreateUser(new UserCreateDto(
@@ -47,6 +50,7 @@ public class UserController(IUserService userService) : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<UserResponse>> Update([FromRoute] Guid id, [FromBody] UserUpdateBodyRequest request)
     {
         User user = await userService.UpdateUser(id, new UserUpdateDto(
@@ -58,6 +62,7 @@ public class UserController(IUserService userService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<NoContentResult> Delete([FromRoute] Guid id)
     {
         await userService.DeleteUser(id);

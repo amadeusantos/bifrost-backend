@@ -2,6 +2,7 @@ using Bifrost.Core.Adapter;
 using Bifrost.Core.Port.Gateway;
 using Bifrost.Core.Port.Repository;
 using Bifrost.Core.Service;
+using Bifrost.Infrastructure.Auth;
 using Bifrost.Infrastructure.Gateway.OAuth;
 using Bifrost.Infrastructure.Persistence;
 using Bifrost.Infrastructure.Persistence.Repository;
@@ -37,6 +38,15 @@ public static class DependencyInjectionConfig
 
         services.AddHttpClient<IOAuthGateway, OAuthGateway>();
 
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<Bifrost.Core.Adapter.IAuthenticationService, Bifrost.Core.Service.AuthenticationService>();
+
+        services.AddAuthentication("GoogleOAuth")
+            .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, GoogleOAuthAuthenticationHandler>("GoogleOAuth", _ => { });
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("ProfessorOnly", p => p.RequireRole("Professor"));
+            options.AddPolicy("StudentOnly", p => p.RequireRole("StudentOnly"));
+            options.AddPolicy("AdminOnly", p => p.RequireClaim("IsAdmin", "True"));
+        });
     }
 }

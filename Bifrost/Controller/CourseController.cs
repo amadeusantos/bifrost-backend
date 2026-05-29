@@ -2,9 +2,11 @@ using Bifrost.Core.Adapter;
 using Bifrost.Core.Domain.Course;
 using Bifrost.Request;
 using Bifrost.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bifrost;
+[Authorize]
 [ApiController]
 [Route("courses")]
 public class CourseController(ICourseService courseService) : ControllerBase
@@ -36,6 +38,7 @@ public class CourseController(ICourseService courseService) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<CourseResponse>> Create(CourseBodyRequest body)
     {
         var courseDto = new CourseDto(Name: body.Name, Code: body.Code);
@@ -44,6 +47,7 @@ public class CourseController(ICourseService courseService) : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<CourseResponse>> Update(Guid id, CourseBodyRequest body)
     {
         var courseDto = new CourseDto(Name: body.Name, Code: body.Code);
@@ -52,6 +56,7 @@ public class CourseController(ICourseService courseService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<NoContentResult> Delete(Guid id)
     {
         await courseService.DeleteCourseByIdAsync(id);

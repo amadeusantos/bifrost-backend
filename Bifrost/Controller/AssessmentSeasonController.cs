@@ -3,10 +3,12 @@ using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.AssessmentSeason;
 using Bifrost.Request;
 using Bifrost.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bifrost;
 
+[Authorize]
 [ApiController]
 [Route("assessment-seasons")]
 public class AssessmentSeasonController(IAssessmentSeasonService assessmentSeasonService) : ControllerBase
@@ -37,6 +39,7 @@ public class AssessmentSeasonController(IAssessmentSeasonService assessmentSeaso
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<AssessmentSeasonResponse>> Create([FromBody] AssessmentSeasonCreateBodyRequest request)
     {
         AssessmentSeason assessmentSeason = await assessmentSeasonService.CreateAssessmentSeason(
@@ -45,6 +48,7 @@ public class AssessmentSeasonController(IAssessmentSeasonService assessmentSeaso
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<AssessmentSeasonResponse>> Update(
         Guid id, [FromBody] AssessmentSeasonUpdateBodyRequest request)
     {
@@ -54,6 +58,7 @@ public class AssessmentSeasonController(IAssessmentSeasonService assessmentSeaso
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<NoContentResult> Delete(Guid id)
     {
         await assessmentSeasonService.DeleteAssessmentSeason(id);

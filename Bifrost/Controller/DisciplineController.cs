@@ -3,10 +3,12 @@ using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.Discipline;
 using Bifrost.Request;
 using Bifrost.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bifrost;
 
+[Authorize]
 [ApiController]
 [Route("disciplines")]
 public class DisciplineController(IDisciplineService disciplineService) : ControllerBase
@@ -30,6 +32,7 @@ public class DisciplineController(IDisciplineService disciplineService) : Contro
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<DisciplineResponse>> Create([FromBody] DisciplineCreateBodyRequest request)
     {
         Discipline discipline = await disciplineService.CreateDiscipline(
@@ -42,8 +45,9 @@ public class DisciplineController(IDisciplineService disciplineService) : Contro
                 request.Students));
         return new DisciplineResponse(discipline);
     }
-
+    
     [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<DisciplineResponse>> Update(
         Guid id, [FromBody] DisciplineUpdateBodyRequest request)
     {
@@ -56,8 +60,9 @@ public class DisciplineController(IDisciplineService disciplineService) : Contro
                 request.Students));
         return new DisciplineResponse(discipline);
     }
-
+    
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<NoContentResult> Delete(Guid id)
     {
         await disciplineService.DeleteDiscipline(id);

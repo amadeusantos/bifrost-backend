@@ -18,6 +18,12 @@ public class UserRepository(ApplicationDbContext applicationDbContext) :Reposito
         return userEntity is not null ? EntityToDomain(userEntity) : null;
     }
 
+    public async Task<User?> FindByGoogleId(string googleId)
+    {
+        UserEntity? userEntity = await dbSet.AsNoTracking().FirstOrDefaultAsync(u => u.GoogleOpenid == googleId);
+        return userEntity is not null ? EntityToDomain(userEntity) : null;
+    }
+
     public async Task<bool> EmailExists(string email)
     {
         return await dbSet.AnyAsync(u => u.Email == email);

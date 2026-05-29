@@ -50,7 +50,8 @@ public class OAuthGateway(HttpClient httpClient, IConfiguration configuration) :
             RefreshToken = tokenResponse.RefreshToken,
             ExpiresIn = tokenResponse.ExpiresIn,
             RefreshTokenExpiresIn = tokenResponse.RefreshTokenExpiresIn,
-            TokenType = tokenResponse.TokenType
+            TokenType = tokenResponse.TokenType,
+            IdToken = tokenResponse.IdToken
         };
     }
 

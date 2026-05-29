@@ -3,10 +3,12 @@ using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.Coordination;
 using Bifrost.Request;
 using Bifrost.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bifrost;
 
+[Authorize]
 [ApiController]
 [Route("coordinations")]
 public class CoordinationController(ICoordinationService coordinationService): ControllerBase
@@ -31,6 +33,7 @@ public class CoordinationController(ICoordinationService coordinationService): C
     }
 
     [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<CoordinationResponse>> Create([FromBody] CoordinationCreateBodyRequest coordinationCreateBodyRequest)
     {
         Coordination coordination = await coordinationService.CreateCoordination(
@@ -43,6 +46,7 @@ public class CoordinationController(ICoordinationService coordinationService): C
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<ActionResult<CoordinationResponse>> Update(
         Guid id, [FromBody] CoordinationUpdateBodyRequest coordinationUpdateBodyRequest)
     {
@@ -56,6 +60,7 @@ public class CoordinationController(ICoordinationService coordinationService): C
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<NoContentResult> Delete(Guid id)
     {
         await coordinationService.DeleteCoordination(id);
