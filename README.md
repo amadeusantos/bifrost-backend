@@ -1,21 +1,16 @@
 # Bifrost
 
-Bifrost is a REST API for evaluating different sectors of a university. Students, professors, and coordinators can submit evaluations for courses, academic centers, disciplines, and classrooms according to their role and enrollment.
+Bifrost is a REST API that supports the academic evaluation lifecycle of a university. It manages the core entities involved in an assessment season — courses, disciplines, academic centers, coordinations, and their members — and handles authentication via Google OAuth 2.0.
 
-## Evaluated sectors
-
-| Sector | Who can evaluate |
-|---|---|
-| **Coordination** (course coordination) | Any student or professor |
-| **Academic Center** | Any student or professor |
-| **Discipline** | Only students enrolled in the discipline |
-| **Classroom** | Only professors who taught a discipline in that classroom |
+Access control follows a two-tier model: any registered user can read data, while write operations (create, update, delete) are restricted to administrators.
 
 ## Documentation
 
 | Document | Description |
 |---|---|
-| [Architecture](docs/ARCHITECTURE.md) | Architectural overview, layer structure, key abstractions, and step-by-step guide for adding new aggregates |
+| [Architecture](docs/ARCHITECTURE.md) | Layer structure, key abstractions, request flow, and guide for adding new aggregates |
+| [Domain Model](docs/domain-model.md) | Class diagram of the core domain entities and their relationships |
+| [Authentication & Access Control](docs/access-control.md) | Google OAuth 2.0 flow, authorization policies, and per-route access matrix |
 
 ## Quick start
 
@@ -34,6 +29,16 @@ dotnet run --project Bifrost
 
 API available at `http://localhost:5018` · Swagger UI at `http://localhost:5018/swagger`
 
+## Authentication
+
+Bifrost delegates identity to Google. To authenticate:
+
+1. Obtain a Google authorization code (scopes: `openid email`)
+2. Exchange it for tokens via `POST /auth/token`
+3. Use the returned `access_token` as a Bearer token on all subsequent requests
+
+See [Authentication & Access Control](docs/access-control.md) for the full flow.
+
 ## Running tests
 
 ```bash
@@ -44,4 +49,5 @@ dotnet test
 
 - ASP.NET Core 10
 - Entity Framework Core 10 + Npgsql (PostgreSQL)
+- Google OAuth 2.0
 - xUnit · NSubstitute · FluentAssertions
