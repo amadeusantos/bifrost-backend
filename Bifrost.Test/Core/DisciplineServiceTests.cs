@@ -65,8 +65,8 @@ public class DisciplineServiceTests
             [duplicateStudentId, duplicateStudentId]);
 
         _assessmentSeasonRepository.FindById(seasonId).Returns(season);
-        _userRepository.FindManyUsers(Arg.Any<List<Guid>>(), UserProfileEnum.Professor, courseId)
-            .Returns([new User { Id = professorId, Email = "prof@test.com" }]);
+        _userRepository.FindById(professorId)
+            .Returns(new User { Id = professorId, Email = "prof@test.com", Profile = UserProfileEnum.Professor});
 
         var act = () => _sut.CreateDiscipline(dto);
 
@@ -87,8 +87,8 @@ public class DisciplineServiceTests
         var saved = new Discipline { Id = Guid.NewGuid(), Name = dto.Name, Code = dto.Code, AssessmentSeasonId = seasonId, ProfessorId = professorId };
 
         _assessmentSeasonRepository.FindById(seasonId).Returns(season);
-        _userRepository.FindManyUsers(Arg.Is<List<Guid>>(l => l.Contains(professorId)), UserProfileEnum.Professor, courseId)
-            .Returns([new User { Id = professorId, Email = "prof@test.com" }]);
+        _userRepository.FindById(professorId)
+            .Returns(new User { Id = professorId, Email = "prof@test.com", Profile = UserProfileEnum.Professor});
         _userRepository.FindManyUsers(Arg.Is<List<Guid>>(l => l.Contains(allowedStudentId)), UserProfileEnum.Student, courseId)
             .Returns([new User { Id = allowedStudentId, Email = "student@test.com" }]);
         _disciplineRepository.Add(Arg.Any<Discipline>()).Returns(callInfo =>
@@ -115,8 +115,8 @@ public class DisciplineServiceTests
         var saved = new Discipline { Id = Guid.NewGuid(), Name = dto.Name, Code = dto.Code, AssessmentSeasonId = seasonId, ProfessorId = professorId };
 
         _assessmentSeasonRepository.FindById(seasonId).Returns(season);
-        _userRepository.FindManyUsers(Arg.Any<List<Guid>>(), UserProfileEnum.Professor, courseId)
-            .Returns([new User { Id = professorId, Email = "prof@test.com" }]);
+        _userRepository.FindById(professorId)
+            .Returns(new User { Id = professorId, Email = "prof@test.com", Profile = UserProfileEnum.Professor});
         _userRepository.FindManyUsers(Arg.Any<List<Guid>>(), UserProfileEnum.Student, courseId).Returns([]);
         _disciplineRepository.Add(Arg.Any<Discipline>()).Returns(saved);
 
@@ -202,8 +202,8 @@ public class DisciplineServiceTests
         var dto = new DisciplineUpdateDto(id, "Math", "MAT101", professorId, [duplicateStudentId, duplicateStudentId]);
 
         _disciplineRepository.FindById(id).Returns(discipline);
-        _userRepository.FindManyUsers(Arg.Any<List<Guid>>(), UserProfileEnum.Professor, courseId)
-            .Returns([new User { Id = professorId, Email = "prof@test.com" }]);
+        _userRepository.FindById(professorId)
+            .Returns(new User { Id = professorId, Email = "prof@test.com", Profile = UserProfileEnum.Professor});
 
         var act = () => _sut.UpdateDiscipline(id, dto);
 
@@ -227,8 +227,8 @@ public class DisciplineServiceTests
         var updated = new Discipline { Id = id, Name = dto.Name, Code = dto.Code, AssessmentSeasonId = discipline.AssessmentSeasonId, ProfessorId = professorId };
 
         _disciplineRepository.FindById(id).Returns(discipline);
-        _userRepository.FindManyUsers(Arg.Any<List<Guid>>(), UserProfileEnum.Professor, courseId)
-            .Returns([new User { Id = professorId, Email = "prof@test.com" }]);
+        _userRepository.FindById(professorId)
+            .Returns(new User { Id = professorId, Email = "prof@test.com", Profile = UserProfileEnum.Professor});
         _userRepository.FindManyUsers(Arg.Any<List<Guid>>(), UserProfileEnum.Student, courseId).Returns([]);
         _disciplineRepository.Update(Arg.Any<Discipline>()).Returns(updated);
 
