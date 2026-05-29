@@ -9,4 +9,5 @@ public class OAuthTokenResponse(OAuthToken token)
     public int ExpiresIn { get; init; } = token.ExpiresIn;
     public int? RefreshTokenExpiresIn { get; init; } = token.RefreshTokenExpiresIn;
     public string TokenType { get; init; } = token.TokenType;
+    public string IdToken { get; init; } = token.IdToken;
 }

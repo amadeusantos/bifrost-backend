@@ -20,7 +20,8 @@ public class AuthenticationServiceTests
     {
         AccessToken = "access-token",
         ExpiresIn = 3600,
-        TokenType = "Bearer"
+        TokenType = "Bearer",
+        IdToken = "id-token"
     };
 
     private static readonly OAuthUserInfo ValidUserInfo = new()

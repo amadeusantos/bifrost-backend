@@ -7,4 +7,5 @@ public class OAuthToken
     public required int ExpiresIn { get; set; }
     public int? RefreshTokenExpiresIn { get; set; }
     public required string TokenType { get; set; }
+    public required string IdToken { get; set; }
 }

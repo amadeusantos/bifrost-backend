@@ -14,4 +14,6 @@ public class OAuthTokenResponse
     public int? RefreshTokenExpiresIn { get; set; }
     [JsonPropertyName("token_type")]
     public required string TokenType { get; set; }
+    [JsonPropertyName("id_token")]
+    public required string IdToken { get; set; }
 }
