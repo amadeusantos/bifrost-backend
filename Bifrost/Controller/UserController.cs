@@ -2,6 +2,7 @@ using Bifrost.Core.Adapter;
 using Bifrost.Core.Domain;
 using Bifrost.Core.Domain.Enum;
 using Bifrost.Core.Domain.User;
+using Bifrost.Infrastructure.Auth;
 using Bifrost.Request;
 using Bifrost.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +25,15 @@ public class UserController(IUserService userService) : ControllerBase
             await userService.GetUsers(paginationQueryRequest.Page, paginationQueryRequest.Size, profile, courseId);
         PaginationResponse<User, UserResponse> response =
             new PaginationResponse<User, UserResponse>(pagination, user => new UserResponse(user));
+        return Ok(response);
+    }
+
+    [HttpGet("me")]
+    public async Task<ActionResult<UserResponse>> GetMe()
+    {
+        
+        User user = await userService.GetUser(User.GetId());
+        UserResponse response = new UserResponse(user);
         return Ok(response);
     }
 
