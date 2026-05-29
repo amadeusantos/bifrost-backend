@@ -7,9 +7,9 @@ public class OAuthUserInfoResponse
     [JsonPropertyName("name")]
     public string? Name { get; set; }
     [JsonPropertyName("email")]
-    public required string Email { get; set; }
+    public string? Email { get; set; }
     [JsonPropertyName("id")]
-    public required string Id { get; set; }
+    public string? Id { get; set; }
     [JsonPropertyName("picture")]
     public string? Picture { get; set; }
     

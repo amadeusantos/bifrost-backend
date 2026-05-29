@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Bifrost.Core.Domain.Authentication;
+using Bifrost.Core.Exception.Authentication;
 using Bifrost.Core.Port.Gateway;
 
 namespace Bifrost.Infrastructure.Gateway.OAuth;
@@ -33,6 +34,10 @@ public class OAuthGateway(HttpClient httpClient, IConfiguration configuration) :
         ]);
 
         var response = await httpClient.PostAsync($"{Oauth2GoogleUrl}/token", body);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new InvalidOAuthCodeException();
+        }
         response.EnsureSuccessStatusCode();
 
         var tokenResponse = await JsonSerializer.DeserializeAsync<OAuthTokenResponse>(
@@ -61,6 +66,11 @@ public class OAuthGateway(HttpClient httpClient, IConfiguration configuration) :
             await response.Content.ReadAsStreamAsync(), JsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialize OAuth user info response");
 
+        if (userInfoResponse.Email == null || userInfoResponse.Id == null)
+        {
+            throw new InsufficientOAuthScopeException();
+        }
+        
         return new OAuthUserInfo
         {
             Id = userInfoResponse.Id,
